@@ -70,6 +70,7 @@
     "workbox-range-requests": "^6.5.3",
     "workbox-routing": "^6.5.3",
     "workbox-strategies": "^6.5.3",
+<<<<<<< HEAD
     "workbox-streams": "^6.5.3",
     "workbox-webpack-plugin": "^6.4.1"
   },
@@ -77,6 +78,15 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
+=======
+    "workbox-streams": "^6.5.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+>>>>>>> bd01ada037fa725233b0bcd9460603db2cf552a5
   },
   "eslintConfig": {
     "extends": [
@@ -95,6 +105,7 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+<<<<<<< HEAD
   },
   "jest": {
     "roots": [
@@ -150,5 +161,7 @@
     "presets": [
       "react-app"
     ]
+=======
+>>>>>>> bd01ada037fa725233b0bcd9460603db2cf552a5
   }
 }
