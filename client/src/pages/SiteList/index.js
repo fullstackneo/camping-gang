@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { API } from '../../config';
 import './index.css';
 import useState from 'react-usestateref';
+import AddSite from '../../components/products/AddProduct.js';
 
 const { Search } = Input;
 
@@ -19,7 +20,7 @@ function SiteList() {
     pageSize: 3,
     pageNumber: 1,
     searchContent: '',
-    showAddProductDialog: false,
+    showAddProductModal: false,
   });
 
   const handleDelete = pid => {
@@ -75,12 +76,6 @@ function SiteList() {
     });
     loadData();
     console.log(ref.current);
-  };
-
-  const handleAdd = () => {
-    setState({
-      showAddProductDialog: true,
-    });
   };
 
   const columns = [
@@ -168,6 +163,14 @@ function SiteList() {
         style={{ width: 600, marginBottom: 20, marginTop: 20 }}
         onSearch={onSearch}
       />
+      <Button
+        type="primary"
+        size="large"
+        style={{ margin: '20px 10px' }}
+        onClick={() => setState({ ...state, showAddProductModal: true })}
+      >
+        Add Site
+      </Button>
       <Table
         dataSource={state.dataSource}
         columns={columns}
@@ -177,6 +180,15 @@ function SiteList() {
           defaultCurrent: state.pageNumber,
           onChange: changePage,
           total: state.total,
+        }}
+      />
+      <AddSite
+        visible={state.showAddProductModal}
+        onClick={() => {
+          setState({ ...state, showAddProductModal: true });
+        }}
+        closeModal={() => {
+          setState({ ...state, showAddProductModal: false });
         }}
       />
     </div>
