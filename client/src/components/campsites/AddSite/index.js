@@ -1,15 +1,18 @@
 import { Modal } from 'antd';
+import AddSiteForm from '../AddSiteForm';
 
 const AddSite = ({ visible, closeModal }) => {
   return (
     <Modal
       visible={visible}
-      title="Add NEW Site"
+      title="Add New Site"
       okText="Add"
       cancelText="Cancel"
       onCancel={closeModal}
+      destroyOnClose
+      width="800px"
     >
-      Add New Site
+      <AddSiteForm closeModal={closeModal} />
     </Modal>
   );
 };

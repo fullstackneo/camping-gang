@@ -5,7 +5,10 @@ import { useEffect } from 'react';
 import { API } from '../../config';
 import './index.css';
 import useState from 'react-usestateref';
-import AddSite from '../../components/products/AddProduct.js';
+import AddSite from '../../components/campsites/AddSite';
+
+
+
 
 const { Search } = Input;
 
@@ -20,7 +23,7 @@ function SiteList() {
     pageSize: 3,
     pageNumber: 1,
     searchContent: '',
-    showAddProductModal: false,
+    showAddSiteModal: false,
   });
 
   const handleDelete = pid => {
@@ -34,18 +37,16 @@ function SiteList() {
       }
     });
   };
-  const loadData = () => {
+  const loadData = async () => {
+    console.log('loadData');
     const params = {
       pageSize: ref.current.pageSize,
       pageNumber: ref.current.pageNumber,
       search: ref.current.searchContent,
     };
-
-    // console.log('par2ams=', params);
-    axios.get('/goods', { params }).then(res => {
-      // console.log(res);
+    await axios.get('/goods', { params }).then(res => {
       setState({
-        ...state,
+        ...ref.current,
         dataSource: res.data.list,
         total: res.data.totalCount,
       });
@@ -59,8 +60,6 @@ function SiteList() {
   // };
 
   const changePage = (page, pageSize) => {
-    // const newState = handleState(page, pageSize);
-    // console.log(newState);
     setState({
       ...state,
       pageNumber: page,
@@ -75,7 +74,6 @@ function SiteList() {
       searchContent: value,
     });
     loadData();
-    console.log(ref.current);
   };
 
   const columns = [
@@ -139,7 +137,6 @@ function SiteList() {
           cancelText="No"
           title="Are you sure？"
           onConfirm={() => {
-            console.log(record);
             handleDelete(record.id);
           }}
         >
@@ -167,7 +164,9 @@ function SiteList() {
         type="primary"
         size="large"
         style={{ margin: '20px 10px' }}
-        onClick={() => setState({ ...state, showAddProductModal: true })}
+        onClick={() => {
+          setState({ ...state, showAddSiteModal: true });
+        }}
       >
         Add Site
       </Button>
@@ -183,12 +182,10 @@ function SiteList() {
         }}
       />
       <AddSite
-        visible={state.showAddProductModal}
-        onClick={() => {
-          setState({ ...state, showAddProductModal: true });
-        }}
+        visible={state.showAddSiteModal}
         closeModal={() => {
-          setState({ ...state, showAddProductModal: false });
+          setState({ ...state, showAddSiteModal: false });
+          loadData();
         }}
       />
     </div>

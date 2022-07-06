@@ -3,12 +3,27 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+import axios from 'axios';
+import { API } from './config';
+
+axios.defaults.baseURL = API;
+axios.interceptors.request.use(config => {
+  NProgress.start();
+  return config;
+});
+
+axios.interceptors.response.use(config => {
+  NProgress.done();
+  return config;
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  // <React.StrictMode>
+  <App />
+  // </React.StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change
