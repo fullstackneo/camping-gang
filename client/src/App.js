@@ -1,9 +1,9 @@
 import React from 'react';
-import GoodsList from './components/SiteList';
+import SiteList from './pages/SiteList';
 // import logo from './logo.svg';
 
 function App() {
-  return <GoodsList />;
+  return <SiteList />;
 }
 
 export default App;
