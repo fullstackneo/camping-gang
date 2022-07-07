@@ -223,6 +223,7 @@ function SiteList() {
           visible={state.showEditSiteModal}
           closeModal={() => {
             setState({ ...state, showEditSiteModal: false });
+            loadData();
           }}
           currentEdit={state.currentEdit}
         />
