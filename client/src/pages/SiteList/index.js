@@ -6,9 +6,7 @@ import { API } from '../../config';
 import './index.css';
 import useState from 'react-usestateref';
 import AddSite from '../../components/campsites/AddSite';
-
-
-
+import EditSite from '../../components/campsites/EditSite';
 
 const { Search } = Input;
 
@@ -24,6 +22,8 @@ function SiteList() {
     pageNumber: 1,
     searchContent: '',
     showAddSiteModal: false,
+    showEditSiteModal: false,
+    currentEdit: '',
   });
 
   const handleDelete = pid => {
@@ -37,8 +37,21 @@ function SiteList() {
       }
     });
   };
+
+  const handleEdit = pid => {
+    axios
+      .get('/goods/get', { params: { goodsId: pid } })
+      .then(res => {
+        setState({
+          ...state,
+          showEditSiteModal: true,
+          currentEdit: res.data,
+        });
+      })
+      .catch(err => console.log(err));
+  };
+
   const loadData = async () => {
-    console.log('loadData');
     const params = {
       pageSize: ref.current.pageSize,
       pageNumber: ref.current.pageNumber,
@@ -132,16 +145,27 @@ function SiteList() {
       align: 'center',
       key: 'id',
       render: (text, record) => (
-        <Popconfirm
-          okText="Yes"
-          cancelText="No"
-          title="Are you sure？"
-          onConfirm={() => {
-            handleDelete(record.id);
-          }}
-        >
-          <Button type="primary">Delete</Button>
-        </Popconfirm>
+        <>
+          <Popconfirm
+            okText="Yes"
+            cancelText="No"
+            title="Are you sure？"
+            onConfirm={() => {
+              handleDelete(record.id);
+            }}
+          >
+            <Button type="primary" style={{ margin: '0 5px' }}>
+              Delete
+            </Button>
+          </Popconfirm>
+          <Button
+            type="parimary"
+            style={{ margin: '0 5px' }}
+            onClick={() => handleEdit(record.id)}
+          >
+            Edit
+          </Button>
+        </>
       ),
     },
   ];
@@ -181,13 +205,28 @@ function SiteList() {
           total: state.total,
         }}
       />
-      <AddSite
-        visible={state.showAddSiteModal}
-        closeModal={() => {
-          setState({ ...state, showAddSiteModal: false });
-          loadData();
-        }}
-      />
+
+      {/* render when showAddSiteModal is true */}
+      {state.showAddSiteModal ? (
+        <AddSite
+          visible={state.showAddSiteModal}
+          closeModal={() => {
+            setState({ ...state, showAddSiteModal: false });
+            loadData();
+          }}
+        />
+      ) : null}
+
+      {/* render when showEditSiteModal is true */}
+      {state.showEditSiteModal ? (
+        <EditSite
+          visible={state.showEditSiteModal}
+          closeModal={() => {
+            setState({ ...state, showEditSiteModal: false });
+          }}
+          currentEdit={state.currentEdit}
+        />
+      ) : null}
     </div>
   );
 }
