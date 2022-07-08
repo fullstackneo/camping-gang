@@ -54,10 +54,32 @@ const NavLeft = () => {
     menuArr.forEach((el, index, arr) => {
       if (el.children) {
         menuItems.push(
-          getItem(el.title, `sub${index}`, null, createMenu(el.children))
+          getItem(
+            <a
+              href="https://ant.design"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {el.title}
+            </a>,
+            `sub${index}`,
+            null,
+            createMenu(el.children)
+          )
         );
       } else {
-        menuItems.push(getItem(el.title, el.id));
+        menuItems.push(
+          getItem(
+            <a
+              href="https://ant.design"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {el.title}
+            </a>,
+            el.id
+          )
+        );
       }
     });
     console.log(menuItems);
@@ -68,7 +90,7 @@ const NavLeft = () => {
     axios
       .get('./menus')
       .then(res => {
-        // pass the menu data to component 
+        // pass the menu data to component
         setMenuItems(createMenu(res.data));
       })
       .catch(e => console.log(e));
@@ -80,9 +102,9 @@ const NavLeft = () => {
 
   return (
     <div
-      // style={{
-      //   width: 256,
-      // }}
+    // style={{
+    //   width: 256,
+    // }}
     >
       {/* <Button
         type="primary"
@@ -97,7 +119,7 @@ const NavLeft = () => {
         defaultSelectedKeys={['0']}
         defaultOpenKeys={['sub0', 'sub1']}
         mode="inline"
-        theme="dark"
+        theme="light"
         // inlineCollapsed={collapsed}
         items={menuItems}
       />
