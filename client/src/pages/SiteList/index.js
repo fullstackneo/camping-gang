@@ -175,7 +175,7 @@ function SiteList() {
   }, []);
 
   return (
-    <div>
+    <div style={{ width: '100%' }}>
       <Search
         placeholder="input search text"
         allowClear
