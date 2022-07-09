@@ -1,0 +1,9 @@
+{
+  "files.exclude": {
+    // "**/node_modules": true,
+    "client/config": true,
+    "client/scripts": true,
+    // "client/jsconfig.json": true
+  },
+  "typescript.validate.enable": false
+}
